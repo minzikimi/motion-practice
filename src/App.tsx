@@ -1,8 +1,8 @@
 // App.tsx
 
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -12,15 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: #f0f0f0;
 `;
-const BiggerBox = styled.div`
-  width: 600px;
-  height: 600px;
-  background-color: tomato;
-  border-radius: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
 
 const Box = styled(motion.div)`
   width: 200px;
@@ -29,27 +21,23 @@ const Box = styled(motion.div)`
 
 `;
 
-const boxVariants = {
-  hover: { rotateZ: 90 },
-  click: { borderRadius: "100px" },
 
-};
 
 function App() {
-  const biggerBoxRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  
+  useMotionValueEvent(x, "change", (latest) => {
+    console.log(latest);
+  });
+
   return (
     <Wrapper>
-      <BiggerBox ref={biggerBoxRef}>
-        <Box
-          drag
-          dragSnapToOrigin
-          dragElastic={0}
-          dragConstraints={biggerBoxRef}
-          variants={boxVariants}
-          whileHover="hover"
-          whileTap="click"
-        />
-      </BiggerBox>
+      <Box
+        style={{ x }} 
+        drag="x"     
+        dragSnapToOrigin
+        // dragConstraints={{ left: -100, right: 100 }} // 필요시 제약 조건 추가
+      />
     </Wrapper>
   );
 }
