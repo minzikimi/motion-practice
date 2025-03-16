@@ -36,7 +36,7 @@ function App() {
         style={{ x }} 
         drag="x"     
         dragSnapToOrigin
-        // dragConstraints={{ left: -100, right: 100 }} // 필요시 제약 조건 추가
+        
       />
     </Wrapper>
   );
